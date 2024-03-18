@@ -1,5 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+#include "AbilitySystemComponent.h"
+#include "MySecondProjectPlayerState.h"
 #include "MySecondProjectCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
@@ -126,5 +128,34 @@ void AMySecondProjectCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+UAbilitySystemComponent* AMySecondProjectCharacter::GetAbilitySystemComponent() const
+{
+	if (const AMySecondProjectPlayerState* MySecondProjectPlayerState = GetPlayerState<AMySecondProjectPlayerState>())
+	{
+		return MySecondProjectPlayerState->GetAbilitySystemComponent();
+	}
+	return nullptr;
+}
+
+void AMySecondProjectCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (const AMySecondProjectPlayerState* AMySecondProjectPlayerStateState = NewController->GetPlayerState<AMySecondProjectPlayerState>())
+	{
+		AMySecondProjectPlayerStateState->GetAbilitySystemComponent()->SetAvatarActor(this);
+	}
+}
+
+void AMySecondProjectCharacter::UnPossessed()
+{
+	Super::UnPossessed();
+
+	if (const AMySecondProjectPlayerState* AMySecondProjectPlayerStateState = GetPlayerState<AMySecondProjectPlayerState>())
+	{
+		AMySecondProjectPlayerStateState->GetAbilitySystemComponent()->SetAvatarActor(nullptr);
 	}
 }
