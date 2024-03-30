@@ -2,7 +2,6 @@
 
 
 #include "MySecondProjectPlayerState.h"
-#include "AbilitySystemComponent.h"
 
 AMySecondProjectPlayerState::AMySecondProjectPlayerState()
 {

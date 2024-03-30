@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/PlayerState.h"
 #include "MySecondProjectPlayerState.generated.h"
